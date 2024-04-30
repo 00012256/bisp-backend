@@ -10,9 +10,9 @@ router.get("/pending-doctors", verifyToken, doctorController.getNotDoctors);
 
 router.post("/apply/:id", verifyToken, doctorController.applyForDoctor);
 
-router.post("/accept/:id", verifyToken, doctorController.acceptDoctor);
+router.put("/accept/:id", verifyToken, doctorController.acceptDoctor);
 
-router.post("/reject/:id", verifyToken, doctorController.rejectDoctor);
+router.put("/reject/:id", verifyToken, doctorController.rejectDoctor);
 
 router.delete("/:id", verifyToken, doctorController.deleteDoctor);
 

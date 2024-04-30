@@ -4,7 +4,7 @@ import Notification from "../models/Notification.js";
 import Appointment from "../models/Appointment.js";
 
 export const getAllDoctors = async () => {
-  return Doctor.find().populate("id");
+  return Doctor.find().populate("id").where("isDoctor").equals(true);
 };
 
 export const getNotDoctors = async () => {
@@ -67,7 +67,7 @@ export const rejectDoctorApplication = async (userId: string) => {
 export const deleteDoctor = async (userId: string) => {
   await User.findByIdAndUpdate(userId, { isDoctor: false });
   await Doctor.findOneAndDelete({ id: userId });
-  await Appointment.findOneAndDelete({ id: userId });
+  await Appointment.findOneAndDelete({ userId });
 
   return "Doctor deleted successfully";
 };

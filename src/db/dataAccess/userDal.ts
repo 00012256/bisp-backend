@@ -11,9 +11,11 @@ export const getAllUsers = async (excludeUserId: string) => {
 };
 
 export const deleteUser = async (userId: string) => {
-  await User.findByIdAndDelete(userId);
-  await Doctor.findByIdAndDelete(userId);
-  await Appointment.findByIdAndDelete(userId);
+  const user = await User.findById(userId);
+  const idForAppointmentDeletion = user?.isDoctor ? "doctorId" : "userId";
+  await user?.deleteOne();
+  await Doctor.findOneAndDelete({ id: userId });
+  await Appointment.deleteMany({ [idForAppointmentDeletion]: userId });
   return "User deleted successfully";
 };
 

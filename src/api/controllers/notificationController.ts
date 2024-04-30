@@ -4,7 +4,7 @@ import * as notificationService from "../services/notificationService.js";
 export const getAllNotifications = async (req: Request, res: Response) => {
   try {
     const userNotifications = await notificationService.fetchAllNotifications(
-      req.body.userId
+      req.params.userId
     );
     res.send(userNotifications);
   } catch (error: any) {

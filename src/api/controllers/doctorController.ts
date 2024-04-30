@@ -21,7 +21,10 @@ export const getNotDoctors = async (req: Request, res: Response) => {
 
 export const applyForDoctor = async (req: Request, res: Response) => {
   try {
-    const result = await doctorService.applyForDoctor(req.params.id, req.body);
+    const result = await doctorService.applyForDoctor(
+      req.params.id,
+      req.body.formDetails
+    );
     res.status(201).send(result);
   } catch (error: any) {
     res.status(500).send(error.message);

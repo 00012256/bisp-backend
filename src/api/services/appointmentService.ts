@@ -2,7 +2,6 @@ import * as appointmentDal from "../../db/dataAccess/appointmentDal.js";
 
 export const getAllAppointments = async (search?: string) => {
   const appointments = await appointmentDal.fetchAllAppointments(search);
-  console.log(appointments);
   return appointments;
 };
 

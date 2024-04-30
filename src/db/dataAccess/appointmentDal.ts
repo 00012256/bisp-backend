@@ -33,9 +33,31 @@ export const saveAppointment = async (
 };
 
 export const markAppointmentAsCompleted = async (appointmentId: string) => {
-  const alreadyFound = await Appointment.findByIdAndUpdate(
+  const appointment = await Appointment.findByIdAndUpdate(
     { _id: appointmentId },
     { status: "completed" }
-  );
-  return alreadyFound;
+  )
+    .populate("doctorId")
+    .populate("userId");
+
+  if (!appointment) {
+    throw new Error("Appointment not found");
+  }
+
+  const userNotification = new Notification({
+    userId: appointment.userId,
+    content: `Your appointment with Dr. ${
+      (appointment.doctorId as any).firstName
+    } ${(appointment.doctorId as any).lastName} has been completed`,
+  });
+  const doctorNotification = new Notification({
+    userId: appointment.doctorId,
+    content: `Your appointment with ${(appointment.userId as any).firstName} ${
+      (appointment.userId as any).lastName
+    } has been completed`,
+  });
+
+  await Promise.all([userNotification.save(), doctorNotification.save()]);
+
+  return appointment;
 };

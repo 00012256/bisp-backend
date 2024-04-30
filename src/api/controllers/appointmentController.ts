@@ -43,7 +43,7 @@ export const bookAppointment = async (req: Request, res: Response) => {
 
 export const markAppointmentCompleted = async (req: Request, res: Response) => {
   try {
-    await appointmentService.completeAppointment(req.body.appointmentId);
+    await appointmentService.completeAppointment(req.params.id);
     res.status(201).send("Appointment marked as completed");
   } catch (error: any) {
     res

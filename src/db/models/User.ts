@@ -21,8 +21,12 @@ const userSchema = new Schema({
   },
   pic: {
     type: String,
-    default:
-      "https://firebasestorage.googleapis.com/v0/b/med-ease-00012256.appspot.com/o/default.jpg?alt=media&token=966ca7ed-bc8f-47f4-baca-7a7b4e7bcda3",
+    set: (value: string) => {
+      if (!value || value.trim() === "") {
+        return "https://firebasestorage.googleapis.com/v0/b/med-ease-00012256.appspot.com/o/default.jpg?alt=media&token=966ca7ed-bc8f-47f4-baca-7a7b4e7bcda3";
+      }
+      return value;
+    },
   },
   status: {
     type: String,
